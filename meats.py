@@ -6,5 +6,5 @@ class Meats(Ingredients):
         Ingredients.__init__(self, name, amount)
 
 class MeatsMenu:
-    items = ["PEPPERONI", "ITALIAN SAUSAGE", "PREMIUM SALAMI", "CLASSICAL MEATBALL", "SLOW-ROASTED HAM", "APPLEWOOD SMOKED BACON", "GRILLED CHICKEN", "BEEF", "SEASONED PORK"]
+    items = ["PEPPERONI", "ITALIAN SAUSAGE", "CLASSICAL MEATBALL", "APPLEWOOD SMOKED BACON", "GRILLED CHICKEN", "BEEF"]
 
