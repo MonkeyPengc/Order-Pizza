@@ -31,7 +31,7 @@ Customer
 
 Meats and Veggies are Ingredients.
 
-One Pizza may contain none or multiple Ingredients.
+One Pizza may contain none or multiple (allow to add more than recommended amount of) Ingredients.
 
 An Order contains at least one Pizza.
 
@@ -44,5 +44,6 @@ PizzaHub creates and stores Orders.
 PizzaHub serves the Customer, takes Order, and creates the payment detail by dialogs.
 
 Customer customizes Pizza w/o Ingredients, modifies or places Order, and checkout.
+
 
 
