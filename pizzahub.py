@@ -35,8 +35,6 @@ class PizzaHub:
             else:
                 break
 
-        sys.exit(1)
-
     def CustomizePizza(self, customer):
         ## initialized
         customer.CreatePizza()
@@ -183,5 +181,5 @@ if __name__ == "__main__":
         ## start order and pay conversation
         app.CreateYourOwn(customer)
                   
-                  
+        sys.exit(1)
 
