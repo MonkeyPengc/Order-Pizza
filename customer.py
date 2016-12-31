@@ -28,8 +28,8 @@ class Customer:
     def CheckOut(self, total_price):
         self.money -= total_price
 
-    def ChangePizzaQTY(self):
-        pass
+    def ChangePizzaQTY(self, id, qty):
+        self.my_order.items[id].quantity = qty
 
     def RemovePizzaFromOrder(self, id):
         self.my_order.items.pop(id)

@@ -69,7 +69,7 @@ class PizzaHub:
 
         while customer.my_order:
             self.ShowPayment(customer)
-            choice = int(input("(REMOVE PIZZA FROM ORDER:0, CHECKOUT:1, ADD MORE PIZZA:2)>> "))
+            choice = int(input("(REMOVE PIZZA FROM ORDER:0, CHECKOUT:1, ADD MORE PIZZA:2, CHANGE QTY:3)>> "))
              
             if not choice:
                 self.RemovePizzaFromOrder(customer)
@@ -84,6 +84,10 @@ class PizzaHub:
              
             if choice == 2:
                 break
+        
+            if choice == 3:
+                self.ChangePizzaQTY(customer)
+                continue
              
         return False
              
@@ -105,10 +109,17 @@ class PizzaHub:
         pizza_id = int(input("Enter a pizza id to be removed: "))
                                               
         customer.RemovePizzaFromOrder(pizza_id)
+    
+    def ChangePizzaQTY(self, customer):
+        pizza_id = int(input("Enter a pizza id to be changed: "))
+        pizza_qty = int(input("Enter a quantity(1-50): "))
+    
+        customer.ChangePizzaQTY(pizza_id, pizza_qty)
+    
                                               
     def ShowOrder(self, customer):
         for id, item in enumerate(customer.my_order.items):
-            print("CREATE YOUR OWN [{0}]:\n {1}".format(id, item))
+            print("CREATE YOUR OWN [{0}]  \n {1} ".format(id, item))
                                                     
     def CreateOrder(self, customer):
         if not customer.my_order:
@@ -131,10 +142,10 @@ class PizzaHub:
             print("Total           ${} \n".format(0.0))
         
         else:
-            self.GetOrderPrice(customer)
             print("        MY ORDER      \n")
             print("========================")
             self.ShowOrder(customer)
+            self.GetOrderPrice(customer)
             print("========================")
             print("Sub Total       ${} \n".format(customer.my_order.subtotal))
             print("Tax             ${} \n".format(customer.my_order.tax))

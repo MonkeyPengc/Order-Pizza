@@ -30,6 +30,7 @@ class Pizza:
         self.veggies_menu = VeggiesMenu.items
         self.ingredients = []
         self.space_used_by_ingredients = 0
+        self.quantity = 1
 
         for item in self.meats_menu:
             self.ingredients.append(Meats(item))
@@ -45,7 +46,7 @@ class Pizza:
 
     def SetPizzaPrice(self):
         price = self.SetSizePrice() + self.SetCheesePrice() + self.SetIngredientsPrice()
-        self.price = float("%.2f" % price)
+        self.price = float("%.2f" % (price * self.quantity))
         
         return self.price
 
@@ -140,6 +141,6 @@ class Pizza:
         for i in self.ingredients:
             ingredients_option += "\n   " + ": ".join([i.name, amount_mapper[i.amount]])
         
-        return "SIZE: {0} \n CHEESE or NO CHEESE: {1} \n ADD INGREDIENTS: {2} \n TOTAL: ${3} \n".format(size_mapper[self.size], amount_mapper[self.cheese_amount], ingredients_option, self.SetPizzaPrice())
+        return "SIZE: {0} \n CHEESE or NO CHEESE: {1} \n ADD INGREDIENTS: {2} \n QTY: {3} \n TOTAL: ${4}".format(size_mapper[self.size], amount_mapper[self.cheese_amount], ingredients_option, self.quantity, self.SetPizzaPrice())
 
 
