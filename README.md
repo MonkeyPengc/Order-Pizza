@@ -10,8 +10,9 @@ Please run pizzahub.py through command line, and follow the instructions.
 
 ## Updates
 
-* 2016-12-29: Added major functions. 
+* 2016-12-29: Added major functions.
 
+* 2016-12-31: Added function that changes the pizza quantity. 
 
 # Design Principles
 
