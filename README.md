@@ -14,6 +14,8 @@ Please run pizzahub.py through command line, and follow the instructions.
 
 * 2016-12-31: Added function that changes the pizza quantity. 
 
+* 2017-01-11: Added database(SQLite) feature that records pizza sales, and partial input error handles.
+
 # Design Principles
 
 ### Entities(Sub Entities)
