@@ -3,6 +3,7 @@ import sys
 
 from customer import Customer
 from order import Order
+from sale import SaleDB
 
 class PizzaHub:
     def __init__(self):
@@ -10,6 +11,7 @@ class PizzaHub:
         self.orders = deque([])
         self.num_orders = 0
         self.sum_money = 0
+        self.sale_db = SaleDB()
 
     def CreateYourOwn(self, customer):
         while True:
@@ -41,10 +43,18 @@ class PizzaHub:
         self.ShowCustomizedPizza(customer)
 
         ## customize options
-        size = int(input("PICK A SIZE (PERSONAL PAN:0, MEDIUM:1, LARGE:2)>> "))
+        while True:
+            try:
+                size = int(input("PICK A SIZE (PERSONAL PAN:0, MEDIUM:1, LARGE:2)>> "))
+            except ValueError:
+                print("Oops! That was not a valid answer. Please enter again.")
+            else:
+                if size in (0,1,2):
+                    break
+                print("Please enter number 0, 1, or 2.")
+
         customer.PickSize(size)
         self.ShowCustomizedPizza(customer)
-
         cheese_amount = int(input("CHEESE OR NO CHEESE (NO CHEESE:0, REGULAR:1, EXTRA:2)>> "))
         customer.SetCheeseAmount(cheese_amount)
         self.ShowCustomizedPizza(customer)
@@ -98,8 +108,7 @@ class PizzaHub:
             self.ShowPayment(customer)
             customer.CheckOut(customer.my_order.total)
             self.orders.append(customer.my_order)
-            self.num_orders += 1
-            self.sum_money += customer.my_order.total
+            self.sale_db.InsertOrder(customer.my_order.total)
             self.DeleteOrder(customer)
             print("\n Your order is on its way...")
             print("         (Hooray!)          \n")
