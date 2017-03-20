@@ -1,14 +1,12 @@
 
-# Order Pizza Desktop App
+# Order Pizza Client
 
 Refer to: https://www.pizzahut.com/#/pizza/create-your-own 
 
 
 ## Support
 
-Command version: Please run pizzahub.py through command line.
-
-New GUI version: Please run client/pizzahub.py.
+Client code for order pizza app can be implemented with command line version in the command folder, or with the new GUI version in the client folder.
 
 ## Major Updates
 
