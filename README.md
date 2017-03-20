@@ -1,20 +1,24 @@
 
-# Order Pizza Online
+# Order Pizza Desktop App
 
-Code workflow refers to: https://www.pizzahut.com/#/pizza/create-your-own 
+Refer to: https://www.pizzahut.com/#/pizza/create-your-own 
 
 
 ## Support
 
-Please run pizzahub.py through command line, and follow the instructions.
+Command version: Please run pizzahub.py through command line.
 
-## Updates
+New GUI version: Please run client/pizzahub.py.
+
+## Major Updates
 
 * 2016-12-29: Added major functions.
 
 * 2016-12-31: Added function that changes the pizza quantity. 
 
 * 2017-01-11: Added database(SQLite) feature that records pizza sales, and partial input error handles.
+
+* 2017-03-19: Brand-new version with graphic interface(Tinkter) and database features on client. Added function that removes pizza from order.
 
 # Design Principles
 
