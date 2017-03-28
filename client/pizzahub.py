@@ -68,7 +68,7 @@ class StartPage(Frame):
             return
         
         address = self.entries[self.fieldnames[1]].get()
-        id = controller.inventory.GetNumOrder() + 1
+        id = controller.inventory.AllocateCustomerID()
         controller.customer = Customer(username, address, id)
         controller.show_frame(PageOne)
 
