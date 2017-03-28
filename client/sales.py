@@ -19,8 +19,13 @@ class SalesDB:
         except sqlite3.ProgrammingError:
             self.conn = sqlite3.connect('order_inventory.db')
             self.cursor = self.conn.cursor()
+<<<<<<< HEAD
             self.cursor.execute('INSERT INTO orderInventory (customer_id, datestamp, value) VALUES(?, ?, ?)', (cid, date, order_value))
         
+=======
+            self.cursor.execute('INSERT INTO orderInventory (customer_id, datestamp, value) VALUES(?, ?, ?)', (id, date, order_value))
+            
+>>>>>>> 931f08f6f9625830054fe3caa9d9a16fd11f9c53
         finally:
             self.conn.commit()
             self.cursor.close()
