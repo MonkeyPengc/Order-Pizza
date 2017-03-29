@@ -13,9 +13,7 @@ class Order:
             self.items = [None] * nums_items
 
     def CalculateOrderPrice(self):
-        self.subtotal = float("%.2f" % sum([self.GetPizzaPrice(p) for p in self.items if p]))
+        self.subtotal = float("%.2f" % sum([p.GetPrice for p in self.items if p]))
         self.tax = float("%.2f" % (self.subtotal * 0.09))
         self.total = float("%.2f" % (self.subtotal + self.tax))
 
-    def GetPizzaPrice(self, pizza):
-        return pizza.price
