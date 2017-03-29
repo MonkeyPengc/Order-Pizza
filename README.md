@@ -18,6 +18,8 @@ Client code for order pizza app can be implemented with command line version in 
 
 * 2017-03-19: Brand-new version with graphic interface(Tinkter) and database features on client. Added function that removes pizza from order.
 
+* 2017-03-27: Improved database for tracking customer and order records separately. 
+
 # Design Principles
 
 ### Entities(Sub Entities)
