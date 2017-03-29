@@ -293,8 +293,8 @@ class PageTwo(Frame):
         
         if askokcancel("Proceed", "Pay the order?"):
             c = controller.customer
-            controller.inventory.InsertOrder(c.id, c.my_order.total)
-            c.CheckOut(c.my_order.total)
+            controller.inventory.InsertOrder(c.id, c.my_order.GetTotalPrice)
+            c.CheckOut(c.my_order.GetTotalPrice)
             c.Clear()
             controller.show_frame(PageThree)
 
@@ -304,7 +304,7 @@ class PageTwo(Frame):
         """
         
         order.CalculateOrderPrice()
-        label3 = Label(self, text="$:"+str(order.total), font=LARGE_FONT)
+        label3 = Label(self, text="$:"+str(order.GetTotalPrice), font=LARGE_FONT)
         label3.grid(row=2, column=5)
         
 
