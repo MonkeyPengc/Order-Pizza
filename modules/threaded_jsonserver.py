@@ -16,13 +16,14 @@ class JsonServer(JsonSocket):
     
     def bind(self):
         self.socket.bind((self.get_host(), self.get_port()))
-        print('Server established at', self.get_host(), self.get_port())
+        self.logger.debug('Server established at {0} {1} {2}'.format(self.get_host(), self.get_port(), self.now()))
     
     def listen(self):
         self.socket.listen(5)
     
     def acceptConnection(self):
         self.conn, clientaddr = self.socket.accept()
+        self.logger.debug('Connection accepted from {0} {1} {2}'.format(clientaddr[0], clientaddr[1], self.now()))
 
     def now(self):
         return time.asctime()
@@ -56,9 +57,9 @@ class ThreadedServer(threading.Thread, JsonServer):
                 self.processPackage(package)
             
             except Exception as e:
-                print(e)
+                self.logger.warning(e)
                 self.closeConnection()
-                break
+                self.stop()
 
         self.close()
 

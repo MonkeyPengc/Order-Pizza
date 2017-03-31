@@ -22,9 +22,12 @@ class JsonClient(JsonSocket):
         try:
             self.socket.connect((self.get_host(), self.get_port()))
         
-        except OSError:
+        except OSError as e:
+            self.logger.error(e)
             return
 
+        else:
+            self.logger.info("Socket connected.")
 
 class AppInterface(Tk):
     """
@@ -39,7 +42,6 @@ class AppInterface(Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
         
-        self.client = JsonClient()  ## initialize a communication object
         self.frames = {}
         self.customer = None
         
@@ -53,6 +55,18 @@ class AppInterface(Tk):
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()    ## render the backend frame up to front, tkraise() inherit from Tk
+
+    def transmit(self, package):
+        """
+        Establish socket communication, send/receive packages.
+        """
+        
+        self.client = JsonClient()
+        self.client.connect()
+        self.client.sendPackage(package)
+        msg = self.client.readPackage()
+        
+        return msg
 
 
 class StartPage(Frame):
@@ -95,10 +109,8 @@ class StartPage(Frame):
         address = self.entries[self.fieldnames[1]].get()
         
         if not self.connected:
-            controller.client.connect()  ## establish a socket connection
             package = {'customer_id':-1}
-            controller.client.sendPackage(package)
-            msg = controller.client.readPackage() ## receive a customer id
+            msg = controller.transmit(package)  ## receive a new customer id
             controller.customer = Customer(username, address, msg['customer_id'])
             self.connected = not self.connected
 
@@ -326,17 +338,12 @@ class PageTwo(Frame):
         if askokcancel("Proceed", "Pay the order?"):
             c = controller.customer
             package = {'customer_id':c.id, 'order_price':c.my_order.GetTotalPrice}
-            controller.client = JsonClient()  ## reinitialize a socket connection
-            controller.client.connect()
-            controller.client.sendPackage(package)
-            msg = controller.client.readPackage() ## receive order confirmed status
+            msg = controller.transmit(package)
             
             if msg['order_received']:
                 c.CheckOut(c.my_order.GetTotalPrice)
                 c.Clear()
                 controller.show_frame(PageThree)
-
-            controller.client.close()
 
     def showOrderPrice(self, order):
         """

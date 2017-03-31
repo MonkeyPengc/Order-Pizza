@@ -2,6 +2,7 @@
 import json
 import struct
 import socket
+import logging
 
 
 class JsonSocket(object):
@@ -15,6 +16,9 @@ class JsonSocket(object):
         self.__port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.conn = self.socket
+        logging.basicConfig()
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
     
     def sendPackage(self, package):
         """
@@ -61,7 +65,8 @@ class JsonSocket(object):
             data += dataTmp
             
             if dataTmp == '':
-                raise RuntimeError("socket connection broken")
+                self.logger.error("Socket connection broken.")
+                raise RuntimeError
     
         return data
 
@@ -80,9 +85,11 @@ class JsonSocket(object):
             self.closeConnection()
 
     def closeSocket(self):
+        self.logger.debug("Closing main socket.")
         self.socket.close()
     
     def closeConnection(self):
+        self.logger.debug("Closing the connection socket.")
         self.conn.close()
     
     def get_host(self):
