@@ -19,7 +19,11 @@ class JsonClient(JsonSocket):
         super(JsonClient, self).__init__(hostname, port)
     
     def connect(self):
-        self.socket.connect((self.get_host(), self.get_port()))
+        try:
+            self.socket.connect((self.get_host(), self.get_port()))
+        
+        except OSError:
+            return
 
 
 class AppInterface(Tk):
@@ -64,6 +68,7 @@ class StartPage(Frame):
         label = Label(self, text="WELCOME TO PIZZA HUB", font=LARGE_FONT)
         label.pack(pady=40, padx=40)
         self.entries = {}
+        self.connected = False
         
         for (i, fn) in enumerate(self.fieldnames):
             lab = Label(self, text=fn)
@@ -88,11 +93,15 @@ class StartPage(Frame):
             return
         
         address = self.entries[self.fieldnames[1]].get()
-        controller.client.connect()  ## establish a socket connection
-        package = {'customer_id':-1}
-        controller.client.sendPackage(package)
-        msg = controller.client.readPackage() ## receive a customer id
-        controller.customer = Customer(username, address, msg['customer_id'])
+        
+        if not self.connected:
+            controller.client.connect()  ## establish a socket connection
+            package = {'customer_id':-1}
+            controller.client.sendPackage(package)
+            msg = controller.client.readPackage() ## receive a customer id
+            controller.customer = Customer(username, address, msg['customer_id'])
+            self.connected = not self.connected
+
         controller.show_frame(PageOne)
 
 
