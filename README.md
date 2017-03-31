@@ -1,7 +1,9 @@
 
 # Order Pizza Client
 
-Refer to: https://www.pizzahut.com/#/pizza/create-your-own 
+[Simulating ordering PizzaHut online](https://www.pizzahut.com/#/pizza/create-your-own)
+
+[More Python Json socket references](https://github.com/chris-piekarski/python-json-socket)
 
 
 ## Support
@@ -9,6 +11,8 @@ Refer to: https://www.pizzahut.com/#/pizza/create-your-own
 Client code for order pizza app can be implemented with command line version in the command folder, or with the new GUI version in the client folder.
 
 Command line version has been removed for simplicity. The lastest code runs on user's local host.
+
+
 
 
 ## Major Updates
