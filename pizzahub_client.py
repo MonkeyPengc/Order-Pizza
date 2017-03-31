@@ -109,7 +109,7 @@ class StartPage(Frame):
         address = self.entries[self.fieldnames[1]].get()
         
         if not self.connected:
-            package = {'customer_id':-1}
+            package = {'customer_id':-1, 'customer_name':username, 'customer_address':address}
             msg = controller.transmit(package)  ## receive a new customer id
             controller.customer = Customer(username, address, msg['customer_id'])
             self.connected = not self.connected
