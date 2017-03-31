@@ -1,6 +1,6 @@
 
-from meats import Meats, MeatsMenu
-from veggies import Veggies, VeggiesMenu
+from .meats import Meats, MeatsMenu
+from .veggies import Veggies, VeggiesMenu
 
 
 class PizzaSize:
@@ -38,12 +38,12 @@ class Pizza:
         for item in self.veggies_menu:
             self.ingredients.append(Veggies(item))
 
-        self.__price = 0
-        self.InitializePizzaPrice()
+        self.__price = self.InitializePizzaPrice()
 
     def InitializePizzaPrice(self):
         price = self.SetSizePrice() + self.SetCheesePrice() + self.SetIngredientsPrice()
         self.SetPrice = float("%.2f" % (price * self.quantity))
+        return self.GetPrice
     
     @property
     def GetPrice(self):

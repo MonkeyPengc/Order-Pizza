@@ -20,6 +20,8 @@ Client code for order pizza app can be implemented with command line version in 
 
 * 2017-03-27: Improved database for tracking customer and order records separately. 
 
+* 2017-03-30: Set up server/client architecture based on socket connection. The client code and documentation has been updated, requiring users to run both server and client code. Removed command line implementation. 
+
 # Design Principles
 
 ### Entities(Sub Entities)

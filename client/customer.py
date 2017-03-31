@@ -1,5 +1,5 @@
 
-from pizza import Pizza
+from .pizza import Pizza
 
 
 class Customer:

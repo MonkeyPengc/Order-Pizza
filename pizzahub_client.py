@@ -1,11 +1,26 @@
 
 import sys
-from tk import *
-from sales import SalesDB
-from customer import Customer
-from order import Order
+from client.tk import *
+from client.customer import Customer
+from client.order import Order
+from modules.jsonsocket import JsonSocket
+import socket
+import time
 
 LARGE_FONT= ("Verdana", 20)
+
+
+class JsonClient(JsonSocket):
+    """
+    Inherit Json Socket class, and enable connect operation.
+    """
+    
+    def __init__(self, hostname='127.0.0.1', port=1617):
+        super(JsonClient, self).__init__(hostname, port)
+    
+    def connect(self):
+        self.socket.connect((self.get_host(), self.get_port()))
+
 
 class AppInterface(Tk):
     """
@@ -20,7 +35,7 @@ class AppInterface(Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
         
-        self.inventory = SalesDB()  ## initialize an order inventory database if not exist
+        self.client = JsonClient()  ## initialize a communication object
         self.frames = {}
         self.customer = None
         
@@ -61,6 +76,11 @@ class StartPage(Frame):
         button.pack()
     
     def handle(self, controller):
+        """
+        Initialize a customer with username, address, and a customer id.
+        Clients send request to the server and get the id.
+        """
+        
         username = self.entries[self.fieldnames[0]].get()
         
         if not username: ## set user name to be a required field
@@ -68,8 +88,11 @@ class StartPage(Frame):
             return
         
         address = self.entries[self.fieldnames[1]].get()
-        id = controller.inventory.AllocateCustomerID()
-        controller.customer = Customer(username, address, id)
+        controller.client.connect()  ## establish a socket connection
+        package = {'customer_id':-1}
+        controller.client.sendPackage(package)
+        msg = controller.client.readPackage() ## receive a customer id
+        controller.customer = Customer(username, address, msg['customer_id'])
         controller.show_frame(PageOne)
 
 
@@ -194,7 +217,7 @@ class PageOne(Frame):
 
     def onShowPrice(self, customer):
         self.onPress(customer)
-        price = customer.pizza.SetPizzaPrice()  ## if not updated by the customer, return default price
+        price = customer.pizza.InitializePizzaPrice()  ## if not updated by the customer, return default price
         showinfo(title="Price", message="TOTAL ${}".format(str(price)))
 
 
@@ -288,15 +311,23 @@ class PageTwo(Frame):
 
     def onCheckout(self, controller):
         """
-        Update order inventory database, empty the order for customers.
+        Call server to insert an order in the order inventory.
         """
         
         if askokcancel("Proceed", "Pay the order?"):
             c = controller.customer
-            controller.inventory.InsertOrder(c.id, c.my_order.GetTotalPrice)
-            c.CheckOut(c.my_order.GetTotalPrice)
-            c.Clear()
-            controller.show_frame(PageThree)
+            package = {'customer_id':c.id, 'order_price':c.my_order.GetTotalPrice}
+            controller.client = JsonClient()  ## reinitialize a socket connection
+            controller.client.connect()
+            controller.client.sendPackage(package)
+            msg = controller.client.readPackage() ## receive order confirmed status
+            
+            if msg['order_received']:
+                c.CheckOut(c.my_order.GetTotalPrice)
+                c.Clear()
+                controller.show_frame(PageThree)
+
+            controller.client.close()
 
     def showOrderPrice(self, order):
         """
@@ -313,11 +344,11 @@ class PageThree(Frame):
     Order confirmation, customers could choose to quit or add more pizza.
     """
     
-    confirm_news = "Your order is on its way... \n          (Hooray!)          \n"
+    cnfrm_msg = "Your order is on its way... \n          (Hooray!)          \n"
     
     def __init__(self, parent, controller):
         Frame.__init__(self,parent)
-        label = Label(self, text=self.confirm_news, font=LARGE_FONT)
+        label = Label(self, text=self.cnfrm_msg, font=LARGE_FONT)
         label.pack(pady=40,padx=40)
         
         button0 = Button(self, text="QUIT", command=lambda:self.quit(controller))
@@ -327,6 +358,7 @@ class PageThree(Frame):
         button1.pack()
 
     def quit(self, controller):
+        controller.client.close()
         controller.destroy()
 
 
@@ -334,5 +366,5 @@ if __name__ == "__main__":
 
     app = AppInterface()
     app.mainloop()
-
+    
     sys.exit(0)

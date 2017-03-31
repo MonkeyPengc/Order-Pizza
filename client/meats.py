@@ -1,5 +1,5 @@
 
-from ingredients import Ingredients
+from .ingredients import Ingredients
 
 class Meats(Ingredients):
     def __init__(self, name, amount=0):
