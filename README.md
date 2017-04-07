@@ -10,8 +10,7 @@ More references about JSON socket could be found at [github](https://github.com/
 
 Client code for order pizza app can be implemented with command line version in the command folder, or with the new GUI version in the client folder.
 
-Command line version has been removed for simplicity. The current code runs on user's local host.
-
+Command line has been removed for simplicity. The current version could be tested using local host.
 
 
 ## Major Updates
@@ -35,7 +34,12 @@ Command line version has been removed for simplicity. The current code runs on u
 
 The program is organized into a number of different components:
 
-[!swa_pic](screenshots/swarchitecture.png)
+![swa_pic](screenshots/swarchitecture.png)
+
+pizzahub_server.py is the program that runs the server. It receives requests from client end. Next, it responds to the requests by sending packages back to the client, and updating the database.
+
+pizzahub_client.py essentially manages user interfaces, and connects to the server end.
+
 
 
 ## Modules of AppInterface
@@ -72,9 +76,11 @@ Customer customizes Pizza w/o Ingredients, modifies or places Order, and checkou
 
 GUI:
 
-[!gui_pic](screenshots/gui.png)
+![gui_pic](screenshots/gui.png)
 
 Database:
 
-[!db_pic](screenshots/db.png)
+![db_pic](screenshots/db.png)
+
+
 
