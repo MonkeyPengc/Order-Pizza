@@ -1,17 +1,16 @@
 
 # Order Pizza Client
 
-[Simulating ordering PizzaHut online](https://www.pizzahut.com/#/pizza/create-your-own)
+Simulating custom ordering pizza at [PizzaHut](https://www.pizzahut.com/#/pizza/create-your-own).
 
-[More Python Json socket references](https://github.com/chris-piekarski/python-json-socket)
+More Python JSON socket references could be found at [github](https://github.com/chris-piekarski/python-json-socket). Thanks, Chris.
 
 
 ## Support
 
 Client code for order pizza app can be implemented with command line version in the command folder, or with the new GUI version in the client folder.
 
-Command line version has been removed for simplicity. The lastest code runs on user's local host.
-
+Command line version has been removed for simplicity. The current code runs on user's local host.
 
 
 
@@ -27,11 +26,19 @@ Command line version has been removed for simplicity. The lastest code runs on u
 
 * 2017-03-27: Improved database for recording customers and orders separately. 
 
-* 2017-03-30: Set up server/client architecture based on socket connection. The client code and documentation has been updated, requiring users to run both server and client code. Removed command line implementation.
+* 2017-03-30: Set up server/client architecture based on TCP communication. The client code and documentation has been updated, requiring users to run both server and client code. Removed command line implementation.
 
 * 2017-03-31: Updated database implementation.
 
-# Design Principles
+
+## Software Architecture
+
+The program is organized into a number of different components:
+
+![swa_pic](screenshots/swarchitecture.png)
+
+
+## Modules of AppInterface
 
 ### Entities(Sub Entities)
 
@@ -64,4 +71,13 @@ PizzaHub serves the Customer, takes Order, and creates the payment detail by dia
 Customer customizes Pizza w/o Ingredients, modifies or places Order, and checkout.
 
 
+## Screenshot in Test
+
+GUI:
+
+![gui_pic](screenshots/gui.png)
+
+Database:
+
+![db_pic](screenshots/db.png)
 
