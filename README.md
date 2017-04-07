@@ -1,9 +1,9 @@
 
 # Order Pizza Client
 
-Simulating custom ordering pizza at [PizzaHut](https://www.pizzahut.com/#/pizza/create-your-own).
+The client code simulates custom ordering pizza at [PizzaHut](https://www.pizzahut.com/#/pizza/create-your-own).
 
-More Python JSON socket references could be found at [github](https://github.com/chris-piekarski/python-json-socket). Thanks, Chris.
+More references about JSON socket could be found at [github](https://github.com/chris-piekarski/python-json-socket). Thanks, Chris.
 
 
 ## Support
@@ -35,14 +35,12 @@ Command line version has been removed for simplicity. The current code runs on u
 
 The program is organized into a number of different components:
 
-![swa_pic](screenshots/swarchitecture.png)
+[!swa_pic](screenshots/swarchitecture.png)
 
 
 ## Modules of AppInterface
 
 ### Entities(Sub Entities)
-
-PizzaHub
 
 Order
 
@@ -62,11 +60,10 @@ An Order contains at least one Pizza.
 
 Customer has an Order, if Pizza is added to.
 
-PizzaHub creates and stores Orders.
 
 ### Behaviors of Entities
 
-PizzaHub serves the Customer, takes Order, and creates the payment detail by dialogs.
+Interfaces serve the Customer, take Order, and render the payment detail.
 
 Customer customizes Pizza w/o Ingredients, modifies or places Order, and checkout.
 
@@ -75,9 +72,9 @@ Customer customizes Pizza w/o Ingredients, modifies or places Order, and checkou
 
 GUI:
 
-![gui_pic](screenshots/gui.png)
+[!gui_pic](screenshots/gui.png)
 
 Database:
 
-![db_pic](screenshots/db.png)
+[!db_pic](screenshots/db.png)
 
