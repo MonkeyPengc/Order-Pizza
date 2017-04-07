@@ -81,8 +81,8 @@ class OrderInventory(Database):
         
         finally:
             self.conn.commit()
-            #self.cursor.close()
-            #self.conn.close()
+            self.cursor.close()
+            self.conn.close()
 
 
         

@@ -22,9 +22,9 @@ class JsonSocket(object):
     
     def sendPackage(self, package):
         """
-        Sender convert python objects to c structs. Packed
-        as a python string according to given formats, and
-        send to the receiver. (Python3 string-bytes)
+        Sender perform object serialization via JSON, convert str
+        to binary data, pack it according to a given format, and
+        send the packed byte stream to the receiver.
         """
         
         msg = json.dumps(package)
@@ -45,9 +45,9 @@ class JsonSocket(object):
                 
     def readPackage(self):
         """ 
-        Receiver read format strings of a certain size,
-        unpack the string according to given format, and
-        convert to python objects.
+        Receiver unpack the specified binary data according to the
+        given format, convert the binary data represented as a tuple
+        back to str, and deserialize it to python objects.
         """
         
         size = self.msgLength()
@@ -106,9 +106,6 @@ class JsonSocket(object):
     
     host = property(get_host, set_host,doc='read only property socket hostname.')
     port = property(get_port, set_port,doc='read only property socket port.')
-
-
-
 
 
 

@@ -4,8 +4,7 @@ from client.tk import *
 from client.customer import Customer
 from client.order import Order
 from modules.jsonsocket import JsonSocket
-import socket
-import time
+
 
 LARGE_FONT= ("Verdana", 20)
 
