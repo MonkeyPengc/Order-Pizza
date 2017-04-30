@@ -29,6 +29,8 @@ Command line has been removed for simplicity. The current version could be teste
 
 * 2017-03-31: Updated database implementation.
 
+* 2017-04-29: Added a database management system of sales history.
+
 
 ## Software Architecture
 
@@ -78,9 +80,7 @@ GUI:
 
 ![gui_pic](screenshots/gui.png)
 
-Database:
+DBM:
 
-![db_pic](screenshots/db.png)
-
-
+![dbm_pic](screenshots/dbm.png)
 

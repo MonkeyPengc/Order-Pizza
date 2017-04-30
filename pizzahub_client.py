@@ -380,6 +380,7 @@ class PageThree(Frame):
 if __name__ == "__main__":
 
     app = AppInterface()
+    app.title("PizzaHub")
     app.mainloop()
     
     sys.exit(0)

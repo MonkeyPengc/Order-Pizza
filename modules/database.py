@@ -84,8 +84,22 @@ class OrderInventory(Database):
             self.cursor.close()
             self.conn.close()
 
+class SqlHelper(Database):
 
-        
+
+    def __init__(self):
+        super().__init__()
+
+    def queryExecute(self, sql):
+        try:
+            return self.cursor.execute(sql)
+
+        except sqlite3.ProgrammingError:
+            self.conn = sqlite3.connect('customers_orders.db', check_same_thread=False)
+            self.cursor = self.conn.cursor()
+            return self.cursor.execute(sql)
+
+
 
 
 
