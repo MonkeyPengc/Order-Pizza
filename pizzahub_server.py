@@ -1,7 +1,7 @@
 
 import sys
 from modules.threaded_jsonserver import ThreadedServer
-from modules.database import Customers, OrderInventory
+from database.sales_database import Customers, OrderInventory
 
 
 class PizzaHubServer(ThreadedServer):
@@ -18,13 +18,13 @@ class PizzaHubServer(ThreadedServer):
     def processPackage(self, package):
         if package.get('customer_id') == -1:
             name, addr = package.get('customer_name'), package.get('customer_address')
-            cid = self.customers_table.AllocateCustomerID(name, addr)
+            cid = self.customers_table.allocateCustomerID(name, addr)
             package['customer_id'] = cid
             self.sendPackage(package)
         
         else:
             cid, price = package['customer_id'], package['order_price']
-            self.orders_table.InsertOrder(cid, price)
+            self.orders_table.insertOrder(cid, price)
             package['order_received'] = True
             self.sendPackage(package)
 

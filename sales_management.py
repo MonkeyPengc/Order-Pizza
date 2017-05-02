@@ -1,13 +1,20 @@
 
 import sys
-from client.tk import *
-from modules.database import SqlHelper
+from modules.tk import *
 from modules.calendar import Calendar
+from database.sales_database import SqlHelper
+from database.admin_database import adminDB
 import calendar
 
 LARGE_FONT= ("Verdana", 20)
 
-class PlatformInterface(Tk):
+
+class QueryInterface(Tk):
+    """ 
+    Query interface dynamiclly loads frames and creates
+    shared methods and attributes.
+    """
+    
     def __init__(self, *args, **kwargs):
         Tk.__init__(self, *args, **kwargs)  ## inherit Tk class, create a Tk() window.
         container = Frame(self, width=40, height=120)
@@ -21,9 +28,9 @@ class PlatformInterface(Tk):
             self.frames[f] = frame     ## pass all frame instances to dict
             frame.grid(row=0, column=0, sticky="nsew")
     
-        self.show_frame(StartPage)
+        self.showFrame(StartPage)
 
-    def show_frame(self, cont):
+    def showFrame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()    ## render the backend frame up to front, tkraise() inherit from Tk
 
@@ -32,22 +39,65 @@ class PlatformInterface(Tk):
 
 
 class StartPage(Frame):
-    """ home page """
+    """ a login page that allows valid users to continue """
+    
+    fieldnames = ['Username', 'Password']
     
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         label = Label(self, text="Database Management System", font=LARGE_FONT)
         label.pack(pady=40, padx=40)
 
-        button0 = Button(self, text="Login", command=lambda:controller.show_frame(PageOne))
+        self.entries = {}
+        
+        for fn in self.fieldnames:
+            lab = Label(self, text=fn)
+            ent = Entry(self, width=30)
+            lab.pack()
+            ent.pack()
+            self.entries[fn] = ent
+
+        button0 = Button(self, text="Login", command=lambda:self.login(controller))
         button0.pack()
     
         button1 = Button(self, text="Quit", command=lambda:controller.quit())
         button1.pack()
 
+    def login(self, controller):
+        """ require a valid username and password to login """
+        
+        username = self.entries[self.fieldnames[0]].get()
+        
+        if not username:
+            showinfo(title="Pop-up", message="Please enter a username.")
+            return
+
+        password = self.entries[self.fieldnames[1]].get()
+        
+        if not password:
+            showinfo(title="Pop-up", message="Please enter the password.")
+            return
+
+        if not self.verifyUser(username, password):
+            showinfo(title="Pop-up", message="Invalid username or password.")
+            return
+
+        controller.showFrame(PageOne)
+
+    def verifyUser(self, name, pw):
+        """ connect to admin database and verify the user input """
+        
+        db = adminDB()
+        
+        user = db.queryByName(name)
+        if not user or not db.login(name, pw, user[1]):
+            return False
+
+        return True
+
 
 class PageOne(Frame):
-    """ interactions with database """
+    """ allow interactions with the sales history """
     
     base_year = 2000
     year_range = 30
@@ -189,7 +239,7 @@ class PageOne(Frame):
 
         self.createTable()  ## reload data
         self.loadData(sql)
-    
+        
 
     def queryByCalendar(self):
         """ query sales by pick a day from calendar """
@@ -205,15 +255,14 @@ class PageOne(Frame):
 
 
 class PageTwo(Frame):
-    """ google map feature """
+    """ display delivery info by google map """
     pass
-
 
 
 
 if __name__ == "__main__":
     
-    app = PlatformInterface()
+    app = QueryInterface()
     app.title("PizzaHub")
     app.mainloop()
     

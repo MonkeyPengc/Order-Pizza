@@ -1,9 +1,9 @@
 
 import sys
-from client.tk import *
+from modules.tk import *
+from modules.jsonsocket import JsonSocket
 from client.customer import Customer
 from client.order import Order
-from modules.jsonsocket import JsonSocket
 
 
 LARGE_FONT= ("Verdana", 20)
@@ -83,7 +83,7 @@ class StartPage(Frame):
         self.entries = {}
         self.connected = False
         
-        for (i, fn) in enumerate(self.fieldnames):
+        for fn in self.fieldnames:
             lab = Label(self, text=fn)
             ent = Entry(self, width=30)
             lab.pack()

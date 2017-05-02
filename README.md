@@ -29,19 +29,24 @@ Command line has been removed for simplicity. The current version could be teste
 
 * 2017-03-31: Updated database implementation.
 
-* 2017-04-29: Added a database management system of sales history.
+* 2017-04-29: Added a sales management system.
+
+* 2017-05-02: Added login authentication, and account administration features to sales management system. 
 
 
 ## Software Architecture
 
 The program is organized into a number of different components:
 
-![swa_pic](screenshots/swarchitecture.png)
+![swa_pic](screenshots/arch.png)
 
 pizzahub_server.py is the program that runs the server. It receives requests from client end. Next, it responds to the requests by sending packages back to the client, and updating the database.
 
 pizzahub_client.py essentially manages user interfaces, and connects to the server end.
 
+sales_management.py runs a query interface, that is able to query sales database.
+
+admin.py is a program that manages accounts information of users, who having access to the sales management system.
 
 
 ## Modules of AppInterface
@@ -76,11 +81,11 @@ Customer customizes Pizza w/o Ingredients, modifies or places Order, and checkou
 
 ## Screenshot in Test
 
-GUI:
+Client Interface:
 
 ![gui_pic](screenshots/gui.png)
 
-DBM:
+Sales Query:
 
 ![dbm_pic](screenshots/dbm.png)
 
