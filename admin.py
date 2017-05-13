@@ -101,7 +101,7 @@ if __name__ == "__main__":
     if ask == 1:
         try:
             username = input("Enter a user name: ")
-            password = person = input("Enter a password: ")
+            password = input("Enter a password: ")
             adm = adminInterface(username, password)
     
         except Exception as e:
